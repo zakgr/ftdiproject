@@ -39,17 +39,14 @@ namespace FtdiProject
         private void CmbPorts_OnLoaded(object sender, RoutedEventArgs e)
         {
             FTDI ftdi = new FTDI();
-            FTDI.FT_DEVICE_INFO_NODE[] devicelist = new FTDI.FT_DEVICE_INFO_NODE[100];
+            FTDI.FT_DEVICE_INFO_NODE[] devicelist = new FTDI.FT_DEVICE_INFO_NODE[200];
             ftdi.GetDeviceList(devicelist);
+            devicelist = devicelist.Where(d => d != null).ToArray();
+
             List<object> deviList = new List<object>();
             foreach (var deviceInfo in devicelist)
-            {
-                try
-                {
+            {     
                     deviList.Add(deviceInfo.Description);
-                }
-                catch (Exception){}
-                
             }
             var comboBox = sender as ComboBox;
             if (comboBox != null)
