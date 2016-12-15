@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FtdiProject"
         mc:Ignorable="d"
+        Loaded="MainWindow_OnLoaded"
+        Name="Main"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" MaxWidth="250" MinWidth="150" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+        <ComboBox 
+            Name="CmbPorts"
+            MinWidth="120"
+            Loaded="CmbPorts_OnLoaded"
+            SelectionChanged="CmbPorts_OnSelectionChanged"
+            />
     </Grid>
 </Window>
