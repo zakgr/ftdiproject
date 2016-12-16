@@ -8,13 +8,13 @@ using IziR.Glue;
 
 namespace FtdiLib
 {
-    public class FtdiDevice : IRelayBoard
+    public class FtdiBoard : IRelayBoard
     {
         private readonly FTDI _ftdi;
         private byte _currentStatus;
         private uint _bytesRead;
 
-        public FtdiDevice()
+        public FtdiBoard()
         {
             _ftdi = new FTDI();
            

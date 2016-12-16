@@ -20,7 +20,7 @@ namespace FtdiProject
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            var device = new FtdiDevice();
+            var device = new FtdiBoard();
             foreach (var relay in device.Relays)
             {
                 var result = relay.IsOpen = true;
