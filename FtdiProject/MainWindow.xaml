@@ -24,5 +24,8 @@
             Loaded="CmbPorts_OnLoaded"
             SelectionChanged="CmbPorts_OnSelectionChanged"
             />
+        <UniformGrid Grid.Row="1" Grid.Column="1" x:Name="grid">
+
+        </UniformGrid>
     </Grid>
 </Window>
