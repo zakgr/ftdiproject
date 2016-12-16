@@ -35,9 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FTD2XX_NET">
-      <HintPath>lib\FTD2XX_NET.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -103,6 +100,10 @@
     <ProjectReference Include="..\FtdiLib\FtdiLib.csproj">
       <Project>{f076edaa-3ad6-4bb4-bc7c-f9d3bc424d95}</Project>
       <Name>FtdiLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IziR.Glue\IziR.Glue.csproj">
+      <Project>{3d11dbc6-9e82-4552-aab1-0d7a556fb453}</Project>
+      <Name>IziR.Glue</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

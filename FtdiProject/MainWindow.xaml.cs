@@ -8,16 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using FtdiLib;
-using FTD2XX_NET;
 
 namespace FtdiProject
 {
@@ -26,6 +17,24 @@ namespace FtdiProject
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var device = new FtdiDevice();
+            foreach (var relay in device.Relays)
+            {
+                var result = relay.IsOpen = true;
+                Thread.Sleep(1000);
+            }
+            foreach (var relay in device.Relays)
+            {
+                var result = relay.IsOpen = false;
+                Thread.Sleep(1000);
+            }
+
+        }
+
+        /*
         private event EventHandler DeviceSelected;
         private FTDI _ftdi = new FTDI();
         private FTDI.FT_DEVICE_INFO_NODE[] _devicelist = new FTDI.FT_DEVICE_INFO_NODE[200];
@@ -35,12 +44,7 @@ namespace FtdiProject
             DeviceSelected += Device_Selected;   
         }
 
-        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            //string[] ports = SerialPort.GetPortNames();
-            _ftdi.GetDeviceList(_devicelist);
-            _devicelist = _devicelist.Where(d => d != null).ToArray();
-        }
+        
 
         private void Device_Selected(object sender, EventArgs e)
         {
@@ -107,5 +111,7 @@ namespace FtdiProject
             this.Title = "Selected: " + value;
             DeviceSelected?.Invoke(value,e);
         }
+        */
     }
+
 }
