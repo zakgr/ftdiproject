@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace IziR.Glue
 {
+    /// <summary>
+    /// Hello World
+    /// </summary>
     public interface IRelay
     {
         bool IsOpen { get; set; }

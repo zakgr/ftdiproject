@@ -14,9 +14,15 @@ namespace FtdiLib
         private byte _currentStatus;
         private uint _bytesRead;
 
-        public FtdiBoard()
+        public override string ToString()
+        {
+            return $"{Serial} (FTDI)";
+        }
+
+        public FtdiBoard(string serial)
         {
             _ftdi = new FTDI();
+            Serial = serial;
            
             if (_ftdi.OpenByIndex(0) != FTDI.FT_STATUS.FT_OK
                 || _ftdi.SetBaudRate(921600) != FTDI.FT_STATUS.FT_OK
@@ -40,11 +46,8 @@ namespace FtdiLib
 
         public string Serial { get; }
 
-        private List<IRelay> _relays;
-        public IEnumerable<IRelay> Relays
-        {
-            get { return _relays; }
-        }
+        private readonly List<IRelay> _relays;
+        public IEnumerable<IRelay> Relays => _relays;
 
         public bool Switch(IRelay relay, bool status)
         {
@@ -53,6 +56,9 @@ namespace FtdiLib
             return WriteToDevice(_currentStatus);
         }
 
-        
+        ~FtdiBoard()
+        {
+            _ftdi.Close();
+        }
     }
 }

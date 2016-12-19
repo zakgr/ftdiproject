@@ -13,8 +13,9 @@
       <ResourceDictionary.MergedDictionaries>
             <ResourceDictionary Source="Styles.xaml"/>
         </ResourceDictionary.MergedDictionaries>
+
+            <local:AddOneConverter x:Key="AddOneConverter"/>
         </ResourceDictionary>
-        <local:AddOneConverter x:Key="AddOneConverter"/>
         
         
     </Window.Resources>
@@ -29,10 +30,13 @@
             <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <ComboBox
-            Name="CmbPorts"
-            MinWidth="120" />
-        <Grid Grid.Row="1" Grid.Column="1">
-            <ItemsControl ItemsSource="{Binding ElementName=Main,Path=RelayStatuses}" VerticalAlignment="Top" HorizontalAlignment="Center">
+            Name="BoardsBox"
+            MinWidth="120" 
+            ItemsSource="{Binding ElementName=Main, Path=Boards}" SelectedIndex="0">
+        
+        </ComboBox>
+                <Grid Grid.Row="1" Grid.Column="1">
+            <ItemsControl ItemsSource="{Binding ElementName=BoardsBox,Path=SelectedItem.Relays}" VerticalAlignment="Top" HorizontalAlignment="Center">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"></StackPanel>
@@ -40,7 +44,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="local:RelayStatus">
-                        <ToggleButton Style="{StaticResource RelayButton}" IsChecked="{Binding State}"  Tag="{Binding Index}" Content="{Binding Index,Converter={StaticResource AddOneConverter}}" FontSize="15"
+                        <ToggleButton Style="{StaticResource RelayButton}" IsChecked="{Binding State}"  Tag="{Binding}" Content="{Binding Index,Converter={StaticResource AddOneConverter}}" FontSize="15"
                                 Click="ButtonBase_OnClick"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

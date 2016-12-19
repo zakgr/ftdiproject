@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FtdiLib", "FtdiLib\FtdiLib.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IziR.Glue", "IziR.Glue\IziR.Glue.csproj", "{3D11DBC6-9E82-4552-AAB1-0D7A556FB453}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialLib", "SerialLib\SerialLib.csproj", "{EA54042B-508A-409F-864A-41ADD098305D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{FB851A61-52EF-491A-AB79-86DE13CFCDF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,8 +31,16 @@ Global
 		{3D11DBC6-9E82-4552-AAB1-0D7A556FB453}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D11DBC6-9E82-4552-AAB1-0D7A556FB453}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D11DBC6-9E82-4552-AAB1-0D7A556FB453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA54042B-508A-409F-864A-41ADD098305D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA54042B-508A-409F-864A-41ADD098305D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA54042B-508A-409F-864A-41ADD098305D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA54042B-508A-409F-864A-41ADD098305D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F076EDAA-3AD6-4BB4-BC7C-F9D3BC424D95} = {FB851A61-52EF-491A-AB79-86DE13CFCDF4}
+		{EA54042B-508A-409F-864A-41ADD098305D} = {FB851A61-52EF-491A-AB79-86DE13CFCDF4}
 	EndGlobalSection
 EndGlobal

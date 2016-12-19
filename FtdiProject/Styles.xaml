@@ -3,13 +3,31 @@
                     xmlns:local="clr-namespace:FtdiProject">
 
     <Style x:Key="RelayButton" TargetType="ToggleButton">
+
         <Style.Setters>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Margin" Value="1"></Setter>
+            <Setter Property="Padding" Value="10 5"></Setter>
             <Setter Property="Template">
+
                 <Setter.Value>
-                    <ControlTemplate>
-                        <Border>
-                            <ContentPresenter></ContentPresenter>
+
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Name="Custom" 
+                                BorderThickness="1"
+                                BorderBrush="CadetBlue"
+                                >
+
+                            <ContentPresenter Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}"></ContentPresenter>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter Property="Background" TargetName="Custom" Value="LightGray"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" TargetName="Custom" Value="LightGreen"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

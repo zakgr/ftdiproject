@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO.Ports;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -12,17 +13,27 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using FtdiLib;
+using IziR.Glue;
 
 namespace FtdiProject
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    
+
     public partial class MainWindow : Window
     {
-        private FtdiBoard _device;
+        #region dps
+        public ObservableCollection<IRelayBoard> Boards
+        {
+            get { return (ObservableCollection<IRelayBoard>)GetValue(BoardsProperty); }
+            set { SetValue(BoardsProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BoardsProperty =
+            DependencyProperty.Register("Boards", typeof(ObservableCollection<IRelayBoard>), typeof(MainWindow), new PropertyMetadata(null));
+
 
 
         public ObservableCollection<RelayStatus> RelayStatuses
@@ -34,24 +45,59 @@ namespace FtdiProject
         // Using a DependencyProperty as the backing store for RelayStatuses.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RelayStatusesProperty =
             DependencyProperty.Register("RelayStatuses", typeof(ObservableCollection<RelayStatus>), typeof(MainWindow), new PropertyMetadata(null));
+        #endregion
+
 
 
         public MainWindow()
         {
             InitializeComponent();
+            Boards = new ObservableCollection<IRelayBoard>();
         }
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            var device = new FtdiBoard();
-            _device = device;
-            RelayStatuses = new ObservableCollection<RelayStatus>();
-            foreach (var relay in device.Relays)
+
+            /*
+            var res =SerialPort.GetPortNames();
+            foreach (var re in res)
             {
-                RelayStatuses.Add(new RelayStatus()
+                SerialPort port = new SerialPort(re);
+
+            }
+            SerialPort serialPort = new SerialPort("COM4", 9600, Parity.None, 8, StopBits.One);
+            serialPort.Open();
+            var data = new byte[] {0xA0, 0x01, 0x01, 0xA2};
+            serialPort.Write(data,0,data.Length);
+            //serialPort.Close();
+            var data2 = new byte[] { 0xA0, 0x01, 0x00, 0xA1 };
+            serialPort.Write(data2, 0, data2.Length);
+            */
+            foreach (var dll in Directory.GetFiles("Plugins", "*.dll"))
+            {
+                try
                 {
-                    State = relay.IsOpen,
-                    Index = relay.Index
-                });
+                    var assembly = Assembly.LoadFrom(dll);
+                    var providerTypes =
+                        assembly.GetTypes().Where(type => typeof(IRelayDeviceProvider).IsAssignableFrom(type));
+                    foreach (var providerType in providerTypes)
+                    {
+
+
+                        if (providerType != null)
+                        {
+                            var provider = (IRelayDeviceProvider)Activator.CreateInstance(providerType);
+                            foreach (var board in provider.GetBoards)
+                            {
+                                Boards.Add(board);
+
+                            }
+
+                        }
+                    }
+                }
+                catch
+                {
+                }
             }
 
         }
@@ -59,39 +105,9 @@ namespace FtdiProject
         {
             var button = sender as ToggleButton;
             if (button == null) return;
-            var relay = _device.Relays.First(r => r.Index == (int)button.Tag);
-            if (button.IsChecked != null)
-                RelayStatuses.First(r => r.Index == (int)button.Tag).State = relay.IsOpen = (bool)button.IsChecked;
+            var relay = button.Tag as IRelay;
+            relay.IsOpen = !relay.IsOpen;
         }
-        /*
-        
-        private void Device_Selected(object sender, EventArgs e)
-        {
-            var deviceSerial = sender as string;
-            _ftdi.Close();
-            _ftdi.OpenBySerialNumber(deviceSerial);
-            
-        }
-
-        private void CmbPorts_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            var deviList = _devicelist.Select(deviceInfo => deviceInfo.SerialNumber).ToList();
-            var comboBox = sender as ComboBox;
-            if (comboBox != null)
-            {
-                comboBox.ItemsSource = deviList;
-                comboBox.SelectedIndex = 0;
-            }
-        }
-        private void CmbPorts_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var comboBox = sender as ComboBox;
-            string value = comboBox?.SelectedItem as string;
-            this.Title = "Selected: " + value;
-            DeviceSelected?.Invoke(value,e);
-        }
-        */
-
 
     }
 

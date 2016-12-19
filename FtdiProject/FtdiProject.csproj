@@ -20,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -103,10 +103,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FtdiLib\FtdiLib.csproj">
-      <Project>{f076edaa-3ad6-4bb4-bc7c-f9d3bc424d95}</Project>
-      <Name>FtdiLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\IziR.Glue\IziR.Glue.csproj">
       <Project>{3d11dbc6-9e82-4552-aab1-0d7a556fb453}</Project>
       <Name>IziR.Glue</Name>
