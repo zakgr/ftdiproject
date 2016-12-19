@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
@@ -8,6 +9,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 using FtdiLib;
 
 namespace FtdiProject
@@ -15,83 +19,58 @@ namespace FtdiProject
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    
     public partial class MainWindow : Window
     {
+        private FtdiBoard _device;
 
-        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+
+        public ObservableCollection<RelayStatus> RelayStatuses
         {
-            var device = new FtdiBoard();
-            foreach (var relay in device.Relays)
-            {
-                var result = relay.IsOpen = true;
-                Thread.Sleep(1000);
-            }
-            foreach (var relay in device.Relays)
-            {
-                var result = relay.IsOpen = false;
-                Thread.Sleep(1000);
-            }
-
+            get { return (ObservableCollection<RelayStatus>)GetValue(RelayStatusesProperty); }
+            set { SetValue(RelayStatusesProperty, value); }
         }
 
-        /*
-        private event EventHandler DeviceSelected;
-        private FTDI _ftdi = new FTDI();
-        private FTDI.FT_DEVICE_INFO_NODE[] _devicelist = new FTDI.FT_DEVICE_INFO_NODE[200];
+        // Using a DependencyProperty as the backing store for RelayStatuses.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty RelayStatusesProperty =
+            DependencyProperty.Register("RelayStatuses", typeof(ObservableCollection<RelayStatus>), typeof(MainWindow), new PropertyMetadata(null));
+
+
         public MainWindow()
         {
             InitializeComponent();
-            DeviceSelected += Device_Selected;   
         }
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var device = new FtdiBoard();
+            _device = device;
+            RelayStatuses = new ObservableCollection<RelayStatus>();
+            foreach (var relay in device.Relays)
+            {
+                RelayStatuses.Add(new RelayStatus()
+                {
+                    State = relay.IsOpen,
+                    Index = relay.Index
+                });
+            }
 
+        }
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            var button = sender as ToggleButton;
+            if (button == null) return;
+            var relay = _device.Relays.First(r => r.Index == (int)button.Tag);
+            if (button.IsChecked != null)
+                RelayStatuses.First(r => r.Index == (int)button.Tag).State = relay.IsOpen = (bool)button.IsChecked;
+        }
+        /*
         
-
         private void Device_Selected(object sender, EventArgs e)
         {
             var deviceSerial = sender as string;
             _ftdi.Close();
             _ftdi.OpenBySerialNumber(deviceSerial);
-            if (_ftdi.IsOpen)
-            {
-                _ftdi.SetBaudRate(921600);
-                _ftdi.SetBitMode(255, 4);
-                uint t=0;
-                _ftdi.Write(new byte[1] { 0 }, 1, ref t);
-
-                for (var i = 0; i < 4; ++i)
-                {
-                    var button = new Button()
-                    {
-                        Content = $"Relay {i + 1}",
-                        Background = Brushes.Crimson,
-                        Tag = i
-                    };
-                    button.Click += (button_Click);
-                    this.grid.Children.Add(button);
-                }
-            }
-        }
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-
-            Relay relayDevice = new Relay();
-            byte[] pinStatus;
-            relayDevice.ReadDevice(_ftdi, out pinStatus);
-
-            var relayButton = (sender as Button);
-            byte pinPosition = relayDevice.PositionNo((int) relayButton.Tag);
             
-            if (Equals(relayButton.Background, Brushes.Crimson))
-            {
-                pinPosition |= pinStatus[0];
-                relayButton.Background = Brushes.ForestGreen;
-            }
-            else
-            {
-                pinPosition ^= pinStatus[0];
-                relayButton.Background = Brushes.Crimson;
-            }
-            relayDevice.WriteDevice(_ftdi, pinPosition);
         }
 
         private void CmbPorts_OnLoaded(object sender, RoutedEventArgs e)
@@ -112,6 +91,8 @@ namespace FtdiProject
             DeviceSelected?.Invoke(value,e);
         }
         */
+
+
     }
 
 }
