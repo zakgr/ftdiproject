@@ -47,8 +47,6 @@ namespace FtdiProject
             DependencyProperty.Register("RelayStatuses", typeof(ObservableCollection<RelayStatus>), typeof(MainWindow), new PropertyMetadata(null));
         #endregion
 
-
-
         public MainWindow()
         {
             InitializeComponent();
@@ -57,21 +55,6 @@ namespace FtdiProject
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
 
-            /*
-            var res =SerialPort.GetPortNames();
-            foreach (var re in res)
-            {
-                SerialPort port = new SerialPort(re);
-
-            }
-            SerialPort serialPort = new SerialPort("COM4", 9600, Parity.None, 8, StopBits.One);
-            serialPort.Open();
-            var data = new byte[] {0xA0, 0x01, 0x01, 0xA2};
-            serialPort.Write(data,0,data.Length);
-            //serialPort.Close();
-            var data2 = new byte[] { 0xA0, 0x01, 0x00, 0xA1 };
-            serialPort.Write(data2, 0, data2.Length);
-            */
             foreach (var dll in Directory.GetFiles("Plugins", "*.dll"))
             {
                 try
@@ -81,8 +64,6 @@ namespace FtdiProject
                         assembly.GetTypes().Where(type => typeof(IRelayDeviceProvider).IsAssignableFrom(type));
                     foreach (var providerType in providerTypes)
                     {
-
-
                         if (providerType != null)
                         {
                             var provider = (IRelayDeviceProvider)Activator.CreateInstance(providerType);
@@ -104,9 +85,8 @@ namespace FtdiProject
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             var button = sender as ToggleButton;
-            if (button == null) return;
-            var relay = button.Tag as IRelay;
-            relay.IsOpen = !relay.IsOpen;
+            var relay = button?.Tag as IRelay;
+            if (relay != null) relay.IsOpen = !relay.IsOpen;
         }
 
     }
