@@ -1,18 +1,10 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO.Ports;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Media;
 using IziR.Glue;
 
 namespace FtdiProject

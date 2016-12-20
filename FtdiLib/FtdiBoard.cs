@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FTD2XX_NET;
 using IziR.Glue;
 
@@ -24,7 +21,7 @@ namespace FtdiLib
             _ftdi = new FTDI();
             Serial = serial;
            
-            if (_ftdi.OpenByIndex(0) != FTDI.FT_STATUS.FT_OK
+            if (_ftdi.OpenBySerialNumber(serial) != FTDI.FT_STATUS.FT_OK
                 || _ftdi.SetBaudRate(921600) != FTDI.FT_STATUS.FT_OK
                 || _ftdi.SetBitMode(255, 4) != FTDI.FT_STATUS.FT_OK)
                 throw new Exception("Can't set device params");
