@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FTD2XX_NET;
-using IziR.Glue;
+using Lib.Glue;
 
 namespace FtdiLib
 {

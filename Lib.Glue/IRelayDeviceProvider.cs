@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace IziR.Glue
+namespace Lib.Glue
 {
     public interface IRelayDeviceProvider
     {

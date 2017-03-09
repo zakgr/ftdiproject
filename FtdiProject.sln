@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FtdiProject", "FtdiProject\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FtdiLib", "FtdiLib\FtdiLib.csproj", "{F076EDAA-3AD6-4BB4-BC7C-F9D3BC424D95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IziR.Glue", "IziR.Glue\IziR.Glue.csproj", "{3D11DBC6-9E82-4552-AAB1-0D7A556FB453}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib.Glue", "Lib.Glue\Lib.Glue.csproj", "{3D11DBC6-9E82-4552-AAB1-0D7A556FB453}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialLib", "SerialLib\SerialLib.csproj", "{EA54042B-508A-409F-864A-41ADD098305D}"
 EndProject

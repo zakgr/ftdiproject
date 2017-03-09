@@ -1,4 +1,4 @@
-﻿using IziR.Glue;
+﻿using Lib.Glue;
 
 namespace SerialLib
 {

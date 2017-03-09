@@ -103,9 +103,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IziR.Glue\IziR.Glue.csproj">
+    <ProjectReference Include="..\Lib.Glue\Lib.Glue.csproj">
       <Project>{3d11dbc6-9e82-4552-aab1-0d7a556fb453}</Project>
-      <Name>IziR.Glue</Name>
+      <Name>Lib.Glue</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

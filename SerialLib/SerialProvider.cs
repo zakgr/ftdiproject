@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO.Ports;
 using System.Management;
-using IziR.Glue;
+using Lib.Glue;
 
 namespace SerialLib
 {

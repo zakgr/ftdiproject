@@ -1,4 +1,4 @@
-﻿namespace IziR.Glue
+﻿namespace Lib.Glue
 {
     /// <summary>
     /// Hello World
